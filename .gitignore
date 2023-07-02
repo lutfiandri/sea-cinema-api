@@ -22,3 +22,7 @@ go.work
 
 # Environtment
 .env
+
+# Temp
+.tmp
+tmp
