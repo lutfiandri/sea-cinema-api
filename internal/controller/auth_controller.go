@@ -61,7 +61,7 @@ func (controller *authController) Login(c *fiber.Ctx) error {
 		return err
 	}
 
-	c.Status(fiber.StatusCreated).JSON(contract.NewSuccessResponse(response))
+	c.Status(fiber.StatusOK).JSON(contract.NewSuccessResponse(response))
 
 	return nil
 }

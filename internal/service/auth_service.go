@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"time"
 
 	"sea-cinema-api/internal/contract"
 	"sea-cinema-api/internal/model"
@@ -9,6 +10,7 @@ import (
 	"sea-cinema-api/internal/utils"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -39,11 +41,16 @@ func (service *authService) Register(ctx context.Context, request contract.Regis
 		return contract.RegisterResponse{}, err
 	}
 
+	now := time.Now()
+
 	user := model.User{
+		Id:        uuid.NewString(),
 		Username:  request.Username,
 		Password:  string(hashedPassword),
 		Name:      request.Name,
 		BirthDate: request.BirthDate,
+		CreatedAt: now,
+		UpdatedAt: now,
 	}
 
 	err = service.userRepository.CreateUser(ctx, user)
