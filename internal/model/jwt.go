@@ -7,6 +7,7 @@ import (
 )
 
 type JWTUserClaimsData struct {
+	Id        string    `json:"id"`
 	Username  string    `json:"username"`
 	Name      string    `json:"name"`
 	BirthDate time.Time `json:"birth_date"`
@@ -14,5 +15,5 @@ type JWTUserClaimsData struct {
 
 type JWTClaims struct {
 	jwt.StandardClaims
-	JWTUserClaimsData
+	User JWTUserClaimsData `json:"user"`
 }

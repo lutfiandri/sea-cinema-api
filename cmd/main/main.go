@@ -28,5 +28,9 @@ func main() {
 	authController := controller.NewAuthController(app, authService)
 	authController.InitRoute()
 
+	profileService := service.NewProfileService(userRepository)
+	profileController := controller.NewProfileController(app, profileService)
+	profileController.InitRoute()
+
 	log.Fatal(app.Listen(":4000"))
 }

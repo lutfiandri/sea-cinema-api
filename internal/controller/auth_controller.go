@@ -52,7 +52,8 @@ func (controller *authController) Register(c *fiber.Ctx) error {
 
 func (controller *authController) Login(c *fiber.Ctx) error {
 	var request contract.LoginRequest
-	if err := c.BodyParser(&request); err != nil {
+	parseOptions := utils.ParseOptions{ParseBody: true}
+	if err := utils.ParseAndValidateRequest[contract.LoginRequest](c, &request, parseOptions); err != nil {
 		return err
 	}
 

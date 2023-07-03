@@ -15,7 +15,7 @@ type UserRepository interface {
 	GetUserById(ctx context.Context, id string) (model.User, error)
 	GetUserByUsername(ctx context.Context, username string) (model.User, error)
 	CreateUser(ctx context.Context, user model.User) error
-	UpdateUserBalance(ctx context.Context, username string, balance float64) error
+	UpdateUser(ctx context.Context, id string, user model.User) error
 }
 
 type userRepository struct {
@@ -67,11 +67,8 @@ func (repository *userRepository) CreateUser(ctx context.Context, user model.Use
 	return nil
 }
 
-func (repository *userRepository) UpdateUserBalance(ctx context.Context, username string, balance float64) error {
-	filter := bson.M{"username": username}
-	update := bson.M{"$set": bson.M{"balance": balance}}
-
-	_, err := repository.collection.UpdateOne(ctx, filter, update)
+func (repository *userRepository) UpdateUser(ctx context.Context, id string, user model.User) error {
+	_, err := repository.collection.ReplaceOne(ctx, bson.M{"_id": id}, user)
 	if err != nil {
 		return err
 	}

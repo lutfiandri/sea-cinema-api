@@ -23,7 +23,7 @@ type authService struct {
 	userRepository repository.UserRepository
 }
 
-func NewAuthService(userRepository repository.UserRepository) *authService {
+func NewAuthService(userRepository repository.UserRepository) AuthService {
 	return &authService{
 		userRepository: userRepository,
 	}
@@ -60,9 +60,10 @@ func (service *authService) Register(ctx context.Context, request contract.Regis
 
 	// generate access token
 	userClaimsData := model.JWTUserClaimsData{
-		Username:  request.Username,
-		Name:      request.Name,
-		BirthDate: request.BirthDate,
+		Id:        user.Id,
+		Username:  user.Username,
+		Name:      user.Name,
+		BirthDate: user.BirthDate,
 	}
 
 	accessToken, err := utils.GenerateJwt(userClaimsData)
@@ -88,6 +89,7 @@ func (service *authService) Login(ctx context.Context, request contract.LoginReq
 
 	// generate access token
 	userClaimsData := model.JWTUserClaimsData{
+		Id:        user.Id,
 		Username:  user.Username,
 		Name:      user.Name,
 		BirthDate: user.BirthDate,

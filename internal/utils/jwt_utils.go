@@ -14,7 +14,7 @@ func GenerateJwt(userClaimsData model.JWTUserClaimsData) (string, error) {
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(24 * time.Hour).Unix(),
 		},
-		JWTUserClaimsData: userClaimsData,
+		User: userClaimsData,
 	}
 
 	tokens := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
